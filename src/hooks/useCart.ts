@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect } from "react"
 
 import type { Guitar, CartItem } from '../types'
 
@@ -19,18 +19,6 @@ export const useCart = () => {
         localStorage.setItem('cart', JSON.stringify(cart))
     }, [cart])
 
-    function addToCart(item : Guitar){
-        const intemExists = cart.findIndex(guitar => guitar.id === item.id)
-        if(intemExists >= 0){
-            if(cart[intemExists].quantity >= MAX_ITEMS) return 
-            const updatedCart = [...cart]
-            updatedCart[intemExists].quantity++
-            setCart(updatedCart)
-        } else {
-            const newItem : CartItem = {...item, quantity : 1 }
-            setCart([...cart, newItem])
-        }
-    }
 
     function removeFromCart(id : Guitar['id']) {
         setCart(prevCart => prevCart.filter(guitar => guitar.id !== id))
@@ -66,20 +54,13 @@ export const useCart = () => {
         setCart([])
     }
 
-    //State Derivado
-
-    const isEmpty = useMemo( () => cart.length === 0, [cart])
-    const cartTotal = useMemo( () => cart.reduce(( total, item ) => total  + (item.quantity * 
-    item.price), 0), [cart] )
+   
 
     return {
         cart,
-        addToCart,
         removeFromCart,
         increaseQuantity,
         decrementQuantity,
         clearCart,
-        isEmpty,
-        cartTotal
     }
 }
