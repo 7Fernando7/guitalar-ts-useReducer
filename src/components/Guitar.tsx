@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 import type { Guitar } from '../types'
-import { CartActions } from '../reducers/cart-reducer';
+import type { CartActions } from '../reducers/cart-reducer';
 
 type GuitarProps = {
     guitar: Guitar, 
